@@ -48,3 +48,88 @@ Products = {
     },
   },
 };
+
+function updateTentDisplay(tentData) {
+  //first select the images and captions
+  const carouselImages = [
+    document.querySelector("#tentCarousel .carousel-item:nth-child(1) img"),
+    document.querySelector("#tentCarousel .carousel-item:nth-child(2) img"),
+    document.querySelector("#tentCarousel .carousel-item:nth-child(3) img"),
+  ];
+  const carouselCaptions = [
+    document.querySelector("#tentCarousel .carousel-item:nth-child(1) h5"),
+    document.querySelector("#tentCarousel .carousel-item:nth-child(2) h5"),
+    document.querySelector("#tentCarousel .carousel-item:nth-child(3) h5"),
+  ];
+  const tentKeys = Object.keys(tentData);
+  //this takes the object Products.camptingTents and puts the next keys ie Northface, coleman, and rei into an array
+  tentKeys.forEach((key, i) => {
+    carouselImages[i].src = tentData[key].image;
+    carouselCaptions[i].textContent =
+      key.charAt(0).toUpperCase() + key.slice(1) + " Tent";
+  });
+
+  const tableData = document.querySelector("#product-details-table tbody");
+  tableData.innerHTML = "";
+  tentKeys.forEach((key, i) => {
+    const tent = tentData[key];
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${key.charAt(0).toUpperCase() + key.slice(1)}</td>
+    <td>${tent.description}</td>
+    <td>${tent.price}</td>
+    <td>${tent.inStock}`;
+    tableData.appendChild(row);
+  });
+}
+
+function updateSleepingBagDisplay(bagData) {
+  // Update carousel images and captions
+  const carouselImages = [
+    document.querySelector("#tentCarousel .carousel-item:nth-child(1) img"),
+    document.querySelector("#tentCarousel .carousel-item:nth-child(2) img"),
+    document.querySelector("#tentCarousel .carousel-item:nth-child(3) img"),
+  ];
+  const carouselCaptions = [
+    document.querySelector("#tentCarousel .carousel-item:nth-child(1) h5"),
+    document.querySelector("#tentCarousel .carousel-item:nth-child(2) h5"),
+    document.querySelector("#tentCarousel .carousel-item:nth-child(3) h5"),
+  ];
+  const bagKeys = Object.keys(bagData);
+  bagKeys.forEach((key, i) => {
+    if (carouselImages[i]) {
+      carouselImages[i].src = bagData[key].image;
+      carouselImages[i].alt =
+        key.charAt(0).toUpperCase() + key.slice(1) + " Sleeping Bag";
+    }
+    if (carouselCaptions[i]) {
+      carouselCaptions[i].textContent =
+        key.charAt(0).toUpperCase() + key.slice(1) + " Sleeping Bag";
+    }
+  });
+
+  // Update product details table
+  const tableBody = document.querySelector("#product-details-table tbody");
+  tableBody.innerHTML = "";
+  bagKeys.forEach((key) => {
+    const bag = bagData[key];
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${key.charAt(0).toUpperCase() + key.slice(1)}</td>
+      <td>${bag.description}</td>
+      <td>${bag.price}</td>
+      <td>${bag.inStock}</td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+// Event listeners for product cards
+const tentCard = document.getElementById("campingTent");
+const sleepingBagCard = document.getElementById("sleepingBag");
+
+tentCard.addEventListener("click", function (e) {
+  updateTentDisplay(Products.campingTents);
+});
+sleepingBagCard.addEventListener("click", function (e) {
+  updateSleepingBagDisplay(Products.sleepingBags);
+});
