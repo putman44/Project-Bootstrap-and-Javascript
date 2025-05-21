@@ -80,6 +80,7 @@ function updateTentDisplay(tentData) {
     <td>${tent.inStock}`;
     tableData.appendChild(row);
   });
+  highlightTableRowByCarousel();
 }
 
 function updateSleepingBagDisplay(bagData) {
@@ -121,7 +122,30 @@ function updateSleepingBagDisplay(bagData) {
     `;
     tableBody.appendChild(row);
   });
+  highlightTableRowByCarousel();
 }
+
+// Highlight the corresponding row in the product table based on the active carousel item
+function highlightTableRowByCarousel() {
+  const carousel = document.getElementById("tentCarousel");
+  const activeIndex = Array.from(
+    carousel.querySelectorAll(".carousel-item")
+  ).findIndex((item) => item.classList.contains("active"));
+  const tableRows = document.querySelectorAll(
+    "#product-details-table tbody tr"
+  );
+  tableRows.forEach((row, i) => {
+    if (i === activeIndex) {
+      row.classList.add("table-primary");
+    } else {
+      row.classList.remove("table-primary");
+    }
+  });
+}
+
+// Listen for carousel slide events to update table row highlight
+const tentCarousel = document.getElementById("tentCarousel");
+tentCarousel.addEventListener("slid.bs.carousel", highlightTableRowByCarousel);
 
 // Event listeners for product cards
 const tentCard = document.getElementById("campingTent");
