@@ -71,7 +71,7 @@ function updateTentDisplay(tentData) {
 
   const tableData = document.querySelector("#product-details-table tbody");
   tableData.innerHTML = "";
-  tentKeys.forEach((key, i) => {
+  tentKeys.forEach((key) => {
     const tent = tentData[key];
     const row = document.createElement("tr");
     row.innerHTML = `<td>${key.charAt(0).toUpperCase() + key.slice(1)}</td>
@@ -132,4 +132,16 @@ tentCard.addEventListener("click", function (e) {
 });
 sleepingBagCard.addEventListener("click", function (e) {
   updateSleepingBagDisplay(Products.sleepingBags);
+});
+
+const subscribeForm = document.querySelector("form");
+subscribeForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (subscribeForm.checkValidity()) {
+    const modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    modal.show();
+    subscribeForm.reset();
+  } else {
+    subscribeForm.classList.add("was-validated");
+  }
 });
