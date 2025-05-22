@@ -61,16 +61,20 @@ function updateTentDisplay(tentData) {
     document.querySelector("#tentCarousel .carousel-item:nth-child(2) h5"),
     document.querySelector("#tentCarousel .carousel-item:nth-child(3) h5"),
   ];
+  //select the keys from the Products.campingTents = [northFace,coleman,rei]
   const tentKeys = Object.keys(tentData);
-  //this takes the object Products.camptingTents and puts the next keys ie Northface, coleman, and rei into an array
+
+  //this takes the tentKeys array [northFace,coleman,rei]
   tentKeys.forEach((key, i) => {
-    carouselImages[i].src = tentData[key].image;
+    carouselImages[i].src = tentData[key].image; //carouselImages[1].src = Products.campingTents[northFace].image = tentData[northFace]."https://images.unsplash.com/photo-1496545672447-f699b503d270?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     carouselCaptions[i].textContent =
       key.charAt(0).toUpperCase() + key.slice(1) + " Tent";
   });
-
+  //select #product table and tbody
   const tableData = document.querySelector("#product-details-table tbody");
+  //set the content of tbody to an empty string
   tableData.innerHTML = "";
+  //take tentKeys array [northFace,coleman,rei] and fill in the created element row for the tbody
   tentKeys.forEach((key) => {
     const tent = tentData[key];
     const row = document.createElement("tr");
@@ -158,6 +162,7 @@ sleepingBagCard.addEventListener("click", function (e) {
   updateSleepingBagDisplay(Products.sleepingBags);
 });
 
+//this was done to remove default operation of the subscribe modal. It makes it so the modal will only show up after the form has been submited and not when the submit button is pressed.
 const subscribeForm = document.querySelector("form");
 subscribeForm.addEventListener("submit", function (e) {
   e.preventDefault();
